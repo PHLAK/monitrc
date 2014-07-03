@@ -1,0 +1,37 @@
+###############################################################################
+## Monit control file
+###############################################################################
+
+set daemon     120                   # Check services at 2-minute intervals
+set logfile    /var/log/monit.log    # Set logging to the systemlog
+set idfile     /var/lib/monit/id     # Set the location of the Monit id file
+set statefile  /var/lib/monit/state  # Set the location of the Monit state file
+
+set mailserver localhost             # Primary mailserver
+    with timeout 15 seconds          # Mailserver timeout
+
+set alert <john@example.com>         # Email address for alerts
+
+set eventqueue
+    basedir /var/lib/monit/events    # Base directory where events will be stored
+    slots 100                        # Optionally limit the queue size
+
+set httpd port 2812
+    allow @webdev                    # Allow access from members of webdev group
+
+## Send status and events to M/Monit (for more informations about M/Monit
+## see http://mmonit.com/). By default Monit registers credentials with
+## M/Monit so M/Monit can smoothly communicate back to Monit and you don't
+## have to register Monit credentials manually in M/Monit. It is possible to
+## disable credential registration using the commented out option below.
+## Though, if safety is a concern we recommend instead using https when
+## communicating with M/Monit and send credentials encrypted.
+
+# set mmonit http://monit:monit@192.168.1.10:8080/collector
+#     # and register without credentials     # Don't register credentials
+
+###############################################################################
+## Includes
+###############################################################################
+
+include /etc/monit/conf.d/*

@@ -1,0 +1,5 @@
+check process mumble-server with pidfile /var/run/mumble-server/mumble-server.pid
+    start program = "/etc/init.d/mumble-server start" with timeout 30 seconds
+    stop program = "/etc/init.d/mumble-server stop"
+    if failed host voice.phlak.net port 64738 then alert
+    if 5 restarts within 5 cycles then timeout
