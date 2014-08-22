@@ -16,8 +16,9 @@ set eventqueue
     basedir /var/lib/monit/events    # Base directory where events will be stored
     slots 100                        # Optionally limit the queue size
 
-set httpd port 2812
-    allow @webdev                    # Allow access from members of webdev group
+set httpd port 2812                  # Enable web service
+    use address localhost
+    allow localhost
 
 ## Send status and events to M/Monit (for more informations about M/Monit
 ## see http://mmonit.com/). By default Monit registers credentials with
